@@ -6,6 +6,8 @@ import org.apache.commons.pool2.impl.AbandonedConfig;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
+import java.time.Duration;
+
 public class SessionPool extends GenericObjectPool<Session> {
     private static GenericObjectPoolConfig defaultPoolConfig = new GenericObjectPoolConfig();
 
@@ -15,11 +17,15 @@ public class SessionPool extends GenericObjectPool<Session> {
         defaultPoolConfig.setMinIdle(2);
         defaultPoolConfig.setMaxIdle(2);
         defaultPoolConfig.setMaxTotal(2);
+        defaultPoolConfig.setMinEvictableIdleTime(Duration.ofMillis(1000 * 60 * 60 ));
+        defaultPoolConfig.setTimeBetweenEvictionRuns(Duration.ofMillis(1000 * 60 ));
         defaultPoolConfig.setTestOnCreate(true);
         defaultPoolConfig.setTestOnBorrow(true);
         defaultPoolConfig.setTestWhileIdle(true);
         defaultPoolConfig.setFairness(true);
         defaultPoolConfig.setLifo(false);
+        defaultPoolConfig.setEvictionPolicyClassName(SessionEvictionPolicy.class.getName());
+
 
     }
 
