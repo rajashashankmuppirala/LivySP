@@ -11,6 +11,7 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedList;
@@ -28,6 +29,11 @@ public class SessionFactory extends BasePooledObjectFactory<Session> {
          this.sessionConfig = sessionConfig;
          if(null == restTemplate){
              restTemplate = new RestTemplate();
+             restTemplate.getInterceptors().add((request, body, execution) ->{
+                 request.getHeaders().add("X-Requested-By", "LivyClient");
+                 request.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+                 return execution.execute(request, body);
+             });
          }
          this.livyApi = new LivyApi(livyUrl,restTemplate);
          checkForExistingPoolSessions();

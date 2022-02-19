@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.shashank.livysp.client.LivyApi;
 import lombok.Data;
 
+import java.sql.SQLException;
+
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Session {
@@ -16,8 +18,11 @@ public class Session {
     private String state;
     private LivyApi livyApi;
 
-    public StatementsResponse executeStatement(StatementsRequest statementsRequest) {
-        return livyApi.executeStatement(statementsRequest, id);
+    public StatementsResponse executeAsycStatement(StatementsRequest statementsRequest) {
+        return livyApi.executeAsyncStatement(statementsRequest, id);
     }
 
+    public StatementsResponse executeSyncStatement(StatementsRequest statementsRequest) throws SQLException {
+        return livyApi.executeSyncStatement(statementsRequest, id);
+    }
 }
