@@ -18,7 +18,7 @@ public class Session {
     private String state;
     private LivyApi livyApi;
 
-    public StatementsResponse executeAsycStatement(StatementsRequest statementsRequest) {
+    public StatementsResponse executeAsyncStatement(StatementsRequest statementsRequest) {
         return livyApi.executeAsyncStatement(statementsRequest, id);
     }
 
