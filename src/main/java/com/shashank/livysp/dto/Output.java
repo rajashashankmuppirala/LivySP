@@ -6,5 +6,5 @@ import lombok.Data;
 public class Output {
     private String status;
     private int executionCount;
-    private String data;
+    private ResponseData data;
 }

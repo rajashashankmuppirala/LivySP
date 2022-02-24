@@ -80,7 +80,7 @@ public class LivyApi {
         StatementsResponse statementsResponse = executeStatement(statementsRequest, sessionId);
         StopWatch stopWatch = StopWatch.createStarted();
         while(true) {
-            StatementsResponse statementResponsestatus = getStatementStatus(sessionId, statementsResponse.getId());
+            StatementsResponse statementResponsestatus = getStatementStatus(statementsResponse.getId(), sessionId);
             if (!StringUtils.equals(statementResponsestatus.getState(), LivyConstants.STATEMENT_RUNNING) &&
                     !StringUtils.equals(statementResponsestatus.getState(), LivyConstants.STATEMENT_WAITING)) {
                 return statementResponsestatus;
